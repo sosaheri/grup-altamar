@@ -18,7 +18,7 @@ class CreateEncomiendasTable extends Migration
             $table->string('NombreyApellidoRemitente');
             $table->string('DocumentodeIdentidadRemitente');
             $table->string('TelefonodeRemitente');
-            $table->integer('NumerodeCorrelativo')->unique();
+            $table->string('NumerodeCorrelativo')->unique();
             $table->date('fechaRecepcion');
             $table->text('descripcion');
             $table->integer('PesoEncomienda');

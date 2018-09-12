@@ -8,6 +8,11 @@
     <div class="box">
          <div class="box-header">
                   <h3 class="box-title">Listado de Usuarios</h3>
+
+                  <div class="box-tools">
+                         <div style="margin: -20px 0px !important;">{{ $users->render() }}</div>
+
+                  </div>
          </div>
 
          <div class="box-body table-responsive no-padding">

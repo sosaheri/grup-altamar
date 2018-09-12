@@ -30,6 +30,9 @@ admin/bower_components/bootstrap/dist/css/bootstrap.min.css
 
 <link rel="stylesheet" href="{!! asset('admin//plugins/timepicker/bootstrap-timepicker.min.css')!!}">
 
+<!-- DataTables -->
+  <link rel="stylesheet" href="{!! asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')!!}">
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -92,7 +95,19 @@ desired effect
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <!-- The user image in the navbar-->
              
-              <!-- hidden-xs hides the username on small devices so only the image appears. -->
+              <!-- hidden-xs hides the username on small devices so only the image appears. <--><span style="margin-right: 40px;"></--><?php 
+                    $fecha =getdate();
+
+$dia = $fecha['mday'];
+$mes = $fecha['mon'];
+$ano = $fecha['year'];
+
+if ($mes < 10){
+  $mes = '0'.$mes;
+}
+
+echo $dia.'-'.$mes.'-'.$ano;
+                   ?></span>
               <span class="hidden-xs">{{ Auth::user()->name }}</span>
             </a>
             <ul class="dropdown-menu">
@@ -100,7 +115,7 @@ desired effect
              
                 <li class="user-header">
                    <p>
-                    {{ Auth::user()->name }}
+                                       {{ Auth::user()->name }}
                     <small>{{ Auth::user()->rol }}</small>
                   </p>
                 </li>
@@ -171,6 +186,7 @@ desired effect
 
         <li><a href="{{ url('encomiendas')}}"><i class="fa fa-cubes"></i> <span>Gestión de Encomiendas</span></a></li>
         <li><a href="{{ url('remesas')}}"><i class="fa fa-money"></i> <span>Gestión de Remesas</span></a></li>
+        
         <li class="treeview">
           <a href="#"><i class="fa fa-sort-amount-asc"></i><span>Transacciones</span>
             <span class="pull-right-container">   
@@ -183,7 +199,22 @@ desired effect
           </ul>
         </li>
         @if(Auth::user()->rol == 'administrador')
-        <li><a href="{{ url('reportes')}}"><i class="fa fa-file-text-o"></i><span>Reportes</span></a></li>
+        
+
+        <li class="treeview">
+          <a href="#"><i class="fa fa-file-text-o"></i><span>Reportes</span>
+            <span class="pull-right-container">   
+            <i class="fa fa-angle-right pull-right"></i>           
+              </span>
+          </a>
+          <ul class="treeview-menu">
+                <li><a href="{{ url('reportesEnc')}}"><i class="fa fa-file-text-o"></i>Reportes Encomiendas</a></li>
+                <li><a href="{{ url('reportesRem')}}"><i class="fa fa-file-text-o"></i>Reportes Remesas</a></li>
+          </ul>
+        </li>
+
+
+
         @endif
 
 
@@ -329,6 +360,10 @@ desired effect
 
 <script src="{!! asset('admin/plugins/timepicker/bootstrap-timepicker.min.js')!!}"></script>
 
+<!-- DataTables -->
+<script src="{!! asset('admin/bower_components/datatables.net/js/jquery.dataTables.min.js')!!}"></script>
+<script src="{!! asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')!!}"></script>
+
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
@@ -358,90 +393,28 @@ desired effect
       showInputs: false
     })
 
-
-
-    $(function () {
-    /* ChartJS
-     * -------
-     * Here we will create a few charts using ChartJS
-     */
-
-    //--------------
-    //- AREA CHART -
-    //--------------
-
-    // Get context with jQuery - using jQuery's .get() method.
-    var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
-    // This will get the first returned node in the jQuery collection.
-    var areaChart       = new Chart(areaChartCanvas)
-
-    var areaChartData = {
-      labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [
-        {
-          label               : 'Electronics',
-          fillColor           : 'rgba(210, 214, 222, 1)',
-          strokeColor         : 'rgba(210, 214, 222, 1)',
-          pointColor          : 'rgba(210, 214, 222, 1)',
-          pointStrokeColor    : '#c1c7d1',
-          pointHighlightFill  : '#fff',
-          pointHighlightStroke: 'rgba(220,220,220,1)',
-          data                : [65, 59, 80, 81, 56, 55, 40]
-        },
-        {
-          label               : 'Digital Goods',
-          fillColor           : 'rgba(60,141,188,0.9)',
-          strokeColor         : 'rgba(60,141,188,0.8)',
-          pointColor          : '#3b8bba',
-          pointStrokeColor    : 'rgba(60,141,188,1)',
-          pointHighlightFill  : '#fff',
-          pointHighlightStroke: 'rgba(60,141,188,1)',
-          data                : [28, 48, 40, 19, 86, 27, 90]
-        }
-      ]
-    }
-
-    var areaChartOptions = {
-      //Boolean - If we should show the scale at all
-      showScale               : true,
-      //Boolean - Whether grid lines are shown across the chart
-      scaleShowGridLines      : false,
-      //String - Colour of the grid lines
-      scaleGridLineColor      : 'rgba(0,0,0,.05)',
-      //Number - Width of the grid lines
-      scaleGridLineWidth      : 1,
-      //Boolean - Whether to show horizontal lines (except X axis)
-      scaleShowHorizontalLines: true,
-      //Boolean - Whether to show vertical lines (except Y axis)
-      scaleShowVerticalLines  : true,
-      //Boolean - Whether the line is curved between points
-      bezierCurve             : true,
-      //Number - Tension of the bezier curve between points
-      bezierCurveTension      : 0.3,
-      //Boolean - Whether to show a dot for each point
-      pointDot                : false,
-      //Number - Radius of each point dot in pixels
-      pointDotRadius          : 4,
-      //Number - Pixel width of point dot stroke
-      pointDotStrokeWidth     : 1,
-      //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-      pointHitDetectionRadius : 20,
-      //Boolean - Whether to show a stroke for datasets
-      datasetStroke           : true,
-      //Number - Pixel width of dataset stroke
-      datasetStrokeWidth      : 2,
-      //Boolean - Whether to fill the dataset with a color
-      datasetFill             : true,
-      //String - A legend template
-      legendTemplate          : '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<datasets.length; i++){%><li><span style="background-color:<%=datasets[i].lineColor%>"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>',
-      //Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-      maintainAspectRatio     : true,
-      //Boolean - whether to make the chart responsive to window resizing
-      responsive              : true
-    }})
-
+//datatable
+  $(function () {
+    $('#example1').DataTable({
+      'paging'      : true,
+      'lengthChange': true,
+      'searching'   : true,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : true
+    })
+    $('#example2').DataTable({
+      'paging'      : true,
+      'lengthChange': true,
+      'searching'   : true,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : false
+    })
+  })
 
 </script>
+
 
 </body>
 </html>

@@ -12,7 +12,7 @@ class UsersController extends Controller
 
    public function home(){
 
-        $users = User::all();
+        $users = User::orderBy('id', 'desc')->paginate(10);
     	//return $users;
         return view('usuarios', ['users' => $users]);
     }

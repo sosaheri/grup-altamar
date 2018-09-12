@@ -52,19 +52,14 @@
                   <label for="FormRemesas">Banco</label>
                   <select name="RemBanco" id="RemBanco" class="form-control" >
                     <option value="<?php echo $transacciones->RemBanco; ?>"><?php echo $transacciones->RemBanco; ?></option>
-                    <option value="BBVA 1">BBVA</option>
-                    <option value="2">BBP</option>
-                    <option value="3">BBVA</option>
-                    <option value="4">BBP</option>
-                    <option value="5">BBVA</option>
-                    <option value="6">BBP</option>
-                    <option value="7">BBVA</option>
-                    <option value="8">BBP</option>
-                    <option value="9">BBVA</option>
-                    <option value="10">BBP</option>
-                    <option value="11">BBVA</option>
-                    <option value="12">BBP</option>
-                    <option value="13">BBVA</option>                                                                                                    
+                    <option value="BBVA DOLARES OMAIRA ZUNIGA 001102440200079431">BBVA DOLARES OMAIRA ZUNIGA 001102440200079431</option>
+                    <option value="BBVA SOLES ALBERTO GONZALEZ 001101450200272829">BBVA SOLES ALBERTO GONZALEZ 001101450200272829</option>
+                    <option value="BBVA SOLES OMAIRA ZUNIGA 001101490200376715">BBVA SOLES OMAIRA ZUNIGA 001101490200376715</option>
+                    <option value="GRUPO DOLARES ALTAMAR SAC 1942294610187">GRUPO DOLARES ALTAMAR SAC 1942294610187</option>
+                    <option value="BBVA SOLES JUNIOR ZUNIGA 001101170201016505">BBVA SOLES JUNIOR ZUNIGA 001101170201016505</option>
+                    <option value="BBVA DOLARES ALBERTO GONZALEZ 001101090200537060">BBVA DOLARES ALBERTO GONZALEZ 001101090200537060</option>
+                    <option value="GRUPO SOLES ALTAMAR SAC 1942372327097">GRUPO SOLES ALTAMAR SAC 1942372327097</option>
+                                                                                                     
                   </select>
                 </div>
 

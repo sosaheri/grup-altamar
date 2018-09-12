@@ -10,13 +10,8 @@
 	              <h3 class="box-title">Remesas</h3>
 
 	              <div class="box-tools">
-                <ul class="pagination pagination-sm no-margin pull-right">
-                  <li><a href="#">&laquo;</a></li>
-                  <li><a href="#">1</a></li>
-                  <li><a href="#">2</a></li>
-                  <li><a href="#">3</a></li>
-                  <li><a href="#">&raquo;</a></li>
-                </ul>
+                   <div style="margin: -20px 0px !important;">{{ $transacciones->render() }}</div>
+
               </div>
 	     </div>
 

@@ -13,8 +13,12 @@ class RemesasController extends Controller
 
    public function home(){
 
-        $transacciones = Remesa::all();
-    	return view('transaccionesRemesas', ['transacciones' => $transacciones]);
+        //$transacciones = Remesa::all();
+    	//return view('transaccionesRemesas', ['transacciones' => $transacciones]);
+
+        $transacciones = Remesa::orderBy('id', 'desc')->paginate(10);
+        return view('transaccionesRemesas', ['transacciones' => $transacciones]);
+
     }
 
     public function add(Request $request){

@@ -10,14 +10,13 @@ use Barryvdh\DomPDF\Facade as PDF;
 class EncomiendasController extends Controller
 {
     public function home(){
-    	$transacciones = Encomienda::all();
+    	$transacciones = Encomienda::orderBy('id', 'desc')->paginate(10);
     	return view('transaccionesEncomiendas', ['transacciones' => $transacciones]);
     }
 
-
     public function add(Request $request){
 
-    $user = Auth::user();
+        $user = Auth::user();
   		
  			   		$this->validate($request, [
     				'NombreyApellidoRemitente' => 'required',
@@ -52,21 +51,15 @@ class EncomiendasController extends Controller
 
 
     		return  redirect('transaccionesEncomiendas')->with('info','Encomienda Registrada');	
-
-
     }
 
-
-        public function update($id){
+    public function update($id){
 
         $transacciones = Encomienda::find($id);
         return view('updateEnc', ['transacciones' => $transacciones]);
-
-
     }
 
-
-        public function edit(Request $request, $id){
+    public function edit(Request $request, $id){
         $data = array(
             'NombreyApellidoRemitente' => $request->input('NombreyApellidoRemitente'),
             'DocumentodeIdentidadRemitente' => $request->input('DocumentodeIdentidadRemitente'),
@@ -87,36 +80,54 @@ class EncomiendasController extends Controller
         ->update($data);
 
         return  redirect('transaccionesEncomiendas')->with('info','Encomieda Actualizada');
-   
-
     }
 
     public function read($id){
         $transacciones = Encomienda::find($id);
         return view('readEnc', ['transacciones' => $transacciones]);
-
-
     }
 
-        public function delete($id){
+    public function delete($id){
         
         Encomienda::where('id', $id)
         ->delete();
         return  redirect('transaccionesEncomiendas')->with('info','Transacción Eliminada');
-   
-
     }
 
-public function downloadPDF($id)
-      {
+    public function downloadPDF($id){
         $transacciones = Encomienda::find($id);
         $pdf = PDF::loadView('pdfenc', compact('transacciones'));
         return $pdf->download('detalleEncomienda.pdf');
-      }
+    }
+  
+    public function peso(){
 
+        $pesoTotal = 0;
+               $encomiendas = Encomienda::all();
+                              
+                $dateStr =getdate();
 
+                $dia = $dateStr['mday'];
+                $mes = $dateStr['mon'];
+                $ano = $dateStr['year'];
 
+                if ($mes < 10){
+                    $mes = '0'.$mes;
+                }
 
+                $str = $ano.'-'.$mes.'-'.$dia;
+                    
+               foreach ($encomiendas as $encomienda) {
 
+                    if($encomienda->fechaRecepcion == $str){
+                            $pesoTotal = $pesoTotal + $encomienda->PesoEncomienda;
+                    }
+                   
+               }
+
+               $pesoTotal;
+
+               return view('encomiendas', ['pesoTotal' => $pesoTotal ]);
+    }
 
 }
